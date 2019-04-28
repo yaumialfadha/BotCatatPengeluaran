@@ -1,0 +1,57 @@
+plugins {
+	id 'jacoco'
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.bot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+bootJar {
+	baseName = 'gs-accessing-data-jpa'
+	version = '0.1.0'
+}
+
+repositories {
+	mavenCentral()
+}
+
+test {
+    finalizedBy jacocoTestReport
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled true
+    }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+	compile 'org.jacoco:org.jacoco.core:0.8.3'
+
+
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.4.RELEASE'
+
+	implementation 'com.linecorp.bot:line-bot-cli:2.4.0'	
+	implementation 'com.linecorp.bot:line-bot-spring-boot:2.4.0'
+	implementation 'com.linecorp.bot:line-bot-servlet:2.4.0'
+	implementation 'com.linecorp.bot:line-bot-model:2.4.0'
+	implementation 'com.linecorp.bot:line-bot-api-client:2.4.0'
+
+	jacocoAgent 'org.jacoco:org.jacoco.agent:0.8.3'
+    jacocoAnt   'org.jacoco:org.jacoco.ant:0.8.3'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompile("junit:junit")
+}
